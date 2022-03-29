@@ -1,9 +1,8 @@
-#if UNITY
 namespace Jam
 {
     using UnityEngine;
 
-    public static class ColorExtensions
+    public static class ColorEx
     {
         public static Color WithAlpha(this Color color, float alpha)
         {
@@ -16,4 +15,3 @@ namespace Jam
         }
     }
 }
-#endif
