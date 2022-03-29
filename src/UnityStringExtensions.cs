@@ -4,7 +4,7 @@ namespace Jam
 
     public class StringEx
     {
-        public static string PulsatingDots(float speed = 2f, int dotCount)
+        public static string PulsatingDots(float speed = 2f, int dotCount = 3)
         {
             string s = "";
             int dots = 1 + ((int)(Time.time * speed) % dotCount);
