@@ -1,5 +1,6 @@
 namespace Jam
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using UnityEngine;
@@ -17,14 +18,19 @@ namespace Jam
             return $"{quote}s{quote}";
         }
 
-        public static string JoinToString<T>(IEnumerable<T> objs, string separator = ", ")
+        public static string JoinBy<A, B>(IEnumerable<A> objects, Func<A, B> converter, string separator)
         {
-            return string.Join(separator, objs.Select(o => o.ToString()));
+            return string.Join(separator, objects.Select(o => converter(o)));
         }
 
         public static string JoinNames<T>(IEnumerable<T> components, string separator = ", ") where T : Component
         {
-            return string.Join(separator, components.Select(component => component.gameObject.name));
+            return JoinBy(components, c => c.gameObject.name, separator);
+        }
+
+        public static string JoinToString<T>(IEnumerable<T> objects, string separator = ", ")
+        {
+            return JoinBy(objects, FP.Identity, separator);
         }
     }
 }
