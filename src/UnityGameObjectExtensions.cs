@@ -1,24 +1,28 @@
 namespace Jam
 {
     using System;
+    using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.SceneManagement;
 
     public static class GameObjectEx
     {
-        public static void T[] FindObjectsBy(Func<T, bool> predicate) where T : Component
+        public static IEnumerable<T> FindObjectsBy<T>(Func<T, bool> predicate, Scene? limitToScene = null) where T : Component
         {
-            var objs = FindObjectsOfType<T>();
-            var result = new List<T>();
+            var objs = GameObject.FindObjectsOfType<T>();
 
-            foreach(var obj in objs)
+            foreach (var obj in objs)
             {
-                if(predicate(obj))
+                if (predicate(obj) && (limitToScene == null || limitToScene == obj.gameObject.scene))
                 {
-                    result.Add(obj);
+                    yield return obj;
                 }
             }
+        }
 
-            return result.ToArray();
+        public static IEnumerable<T> FindObjectsWithin<T>(Vector3 center, float radius, Scene? limitToScene = null) where T : Component
+        {
+            return FindObjectsBy<T>(t => Vector3.Distance(center, t.transform.position) < radius, limitToScene);
         }
     }
 }
