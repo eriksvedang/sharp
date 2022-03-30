@@ -1,25 +1,27 @@
-using UnityEngine;
-using Coherence.Toolkit;
-
-public class SimpleControls : MonoBehaviour
+namespace Jam
 {
-    public float speed = 40f;
-    public Space space = Space.World;
+    using UnityEngine;
 
-    CoherenceSync sync;
-
-    void Awake()
+    public class SimpleControls : MonoBehaviour
     {
-        sync = GetComponent<CoherenceSync>();
-    }
+        public float speed = 40f;
+        public Space space = Space.World;
 
-    void Update()
-    {
-        if (sync.isSimulated)
+        CoherenceSync sync;
+
+        void Awake()
         {
-            var h = Input.GetAxis("Horizontal") * speed;
-            var v = Input.GetAxis("Vertical") * speed;
-            transform.Translate(new Vector3(h, 0, v) * Time.deltaTime, space);
+            sync = GetComponent<CoherenceSync>();
+        }
+
+        void Update()
+        {
+            if (sync.isSimulated)
+            {
+                var h = Input.GetAxis("Horizontal") * speed;
+                var v = Input.GetAxis("Vertical") * speed;
+                transform.Translate(new Vector3(h, 0, v) * Time.deltaTime, space);
+            }
         }
     }
 }

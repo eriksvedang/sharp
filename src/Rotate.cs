@@ -1,23 +1,25 @@
-using UnityEngine;
-using Coherence.Toolkit;
-
-public class Rotate : MonoBehaviour
+namespace Jam
 {
-    public Vector3 rotationSpeed;
-    public Space space = Space.World;
+    using UnityEngine;
 
-    CoherenceSync sync;
-
-    void Awake()
+    public class Rotate : MonoBehaviour
     {
-        sync = GetComponent<CoherenceSync>();
-    }
+        public Vector3 rotationSpeed;
+        public Space space = Space.World;
 
-    void Update()
-    {
-        if (sync.isSimulated)
+        CoherenceSync sync;
+
+        void Awake()
         {
-            transform.Rotate(rotationSpeed * Time.deltaTime, space);
+            sync = GetComponent<CoherenceSync>();
+        }
+
+        void Update()
+        {
+            if (sync.isSimulated)
+            {
+                transform.Rotate(rotationSpeed * Time.deltaTime, space);
+            }
         }
     }
 }
