@@ -9,5 +9,10 @@ namespace Jam
             int len = 1 + ((int)(Time.time * speed) % s.Length);
             return s.Substring(0, len);
         }
+
+        public static string Quoted(this string s, string quote = "'")
+        {
+            return $"{quote}s{quote}";
+        }
     }
 }
