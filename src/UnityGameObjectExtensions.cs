@@ -6,8 +6,30 @@ namespace Jam
     using UnityEngine;
     using UnityEngine.SceneManagement;
 
+    public class MissingComponent : Exception
+    {
+        public Type missingComponentType;
+
+        public override string Message => missingComponentType.ToString();
+    }
+
     public static class GameObjectEx
     {
+        public static T GetComponentOrThrow<T>(this GameObject gameObject)
+        {
+            if(gameObject.TryGetComponent(out T component))
+            {
+                return component;
+            }
+            else
+            {
+                throw new MissingComponent()
+                {
+                    missingComponentType = typeof(T)
+                };
+            }
+        }
+
         public static IEnumerable<T> FindObjectsBy<T>(Func<T, bool> predicate) where T : Component
         {
             return GameObject.FindObjectsOfType<T>().Where(predicate);
