@@ -20,9 +20,20 @@ namespace Jam
             }
         }
 
-        public static IEnumerable<T> FindObjectsWithin<T>(Vector3 center, float radius, Scene? limitToScene = null) where T : Component
+        public static IEnumerable<T> FindObjectsWithinSphere<T>(Vector3 center, float radius, Scene? limitToScene = null) where T : Component
         {
             return FindObjectsBy<T>(t => Vector3.Distance(center, t.transform.position) < radius, limitToScene);
+        }
+
+        public static IEnumerable<T> InScene<T>(this IEnumerable<T> components, Scene scene) where T : Component
+        {
+            foreach(var component in components)
+            {
+                if(component.gameObject.scene == scene)
+                {
+                    yield return component;
+                }
+            }
         }
     }
 }
