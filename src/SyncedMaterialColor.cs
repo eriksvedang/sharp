@@ -1,3 +1,4 @@
+#if COHERENCE_JAM
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,3 +33,4 @@ public class SyncedMaterialColor : MonoBehaviour
         rend.material.color = color;
     }
 }
+#endif
